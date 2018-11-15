@@ -31,7 +31,7 @@ class DetailVC: UIViewController {
         addressLabel.text = restaurantDetails.location?.address ?? ""
         cosmosView.text = "(\(restaurantDetails.userRating?.votes ?? "0") reviews)"
         
-        if let rating = restaurantDetails.userRating?.aggregate_rating {
+        if let rating = restaurantDetails.userRating?.rating {
             cosmosView.rating = (rating as NSString).doubleValue
         } else {
             cosmosView.rating = 0.0

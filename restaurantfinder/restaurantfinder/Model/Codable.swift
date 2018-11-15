@@ -44,11 +44,20 @@ struct Restaurant: Decodable {
     let location: Address?
     let userRating: UserRating?
 
-    enum CodingKeys: String, CodingKey {
+    private enum RestaurantCodingKeys: String, CodingKey {
         case name
         case cuisines
         case location
         case userRating = "user_rating"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: RestaurantCodingKeys.self)
+        name = try values.decode(String.self, forKey: .name)
+        cuisines = try values.decode(String.self, forKey: .cuisines)
+        location = try values.decode(Address.self, forKey: .location)
+        userRating = try values.decode(UserRating.self, forKey: .userRating)
+    
     }
 }
 
@@ -59,6 +68,17 @@ struct Address: Decodable {
 }
 
 struct UserRating: Decodable {
-    let aggregate_rating: String?
+    let rating: String?
     let votes: String?
+    
+    private enum UserCodingKeys: String, CodingKey {
+        case rating = "aggregate_rating"
+        case votes
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: UserCodingKeys.self)
+        rating = try values.decode(String.self, forKey: .rating)
+        votes = try values.decode(String.self, forKey: .votes)
+    }
 }
