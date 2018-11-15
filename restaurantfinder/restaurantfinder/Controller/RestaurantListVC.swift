@@ -37,6 +37,11 @@ class RestaurantListVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 self.navigationItem.title = root.location?.title
                 self.restaurants = root.restaurants ?? []
                 self.listTableView.reloadData()
+                
+                if self.restaurants.count == 0 {
+                    self.listTableView.isHidden = true
+                }
+                
             } else {
                 let notification = UIAlertController(title: "Error", message: "Cannot complete search at this time. Please try again.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: { (action) in
